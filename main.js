@@ -17,3 +17,18 @@ password()
 let passwordIngresado = prompt("Ingrese Password")
 alert("El Password ingresado es " + passwordIngresado)
 
+function registro () {
+    console.log("Te registraste correctamente");
+}
+
+registro()
+
+let registroCorrecto =alert("Te registraste correctamente")
+
+function info (){
+    console.log("Estos son tus datos de Usuario");
+}
+
+info()
+
+let infoDeUsuario =alert("Tus dastos para el ID son" + nombreIngresado + passwordIngresado)
