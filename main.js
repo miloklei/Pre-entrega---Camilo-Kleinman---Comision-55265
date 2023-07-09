@@ -31,4 +31,4 @@ function info (){
 
 info()
 
-let infoDeUsuario =alert("Tus dastos para el ID son" + nombreIngresado + passwordIngresado)
+let infoDeUsuario =alert("Tus dastos para el ID son" + " " + "Nombre de usuario:" + " " + nombreIngresado + " " + "Password:" + " " + passwordIngresado)
