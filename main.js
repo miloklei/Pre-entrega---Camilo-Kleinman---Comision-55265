@@ -5,6 +5,12 @@ function saludar() {
 saludar()
 
 let nombreIngresado = prompt("Ingrese ID")
+
+if (!nombreIngresado.includes("@")) {
+    alert("El ID debe contener el carácter '@'. Por favor, ingréselo nuevamente.");
+    nombreIngresado = prompt("Ingrese ID");
+}
+
 alert("El ID ingresado es " + nombreIngresado)
 
 
