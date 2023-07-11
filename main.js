@@ -4,14 +4,22 @@ function saludar() {
 
 saludar()
 
-let nombreIngresado = prompt("Ingrese ID")
+let primerIngreso= true;
+let nombreIngresado;
 
-if (!nombreIngresado.includes("@")) {
-    alert("El ID debe contener el carácter '@'. Por favor, ingréselo nuevamente.");
-    nombreIngresado = prompt("Ingrese ID");
+do{
+    if (primerIngreso)
+    {
+        nombreIngresado = prompt("Ingrese ID");
+        primerIngreso = false;
+    }
+    else
+    {
+        alert("El ID debe contener el carácter '@'. Por favor, ingréselo nuevamente.");
+        nombreIngresado = prompt("Ingrese ID");
+    }
 }
-
-alert("El ID ingresado es " + nombreIngresado)
+while(!nombreIngresado.includes("@"));
 
 
 function password() {
