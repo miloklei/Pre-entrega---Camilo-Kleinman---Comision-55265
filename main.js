@@ -14,33 +14,6 @@ let total = 0;
 let mayorGasto = new Gasto();
 
 
-function info(){
-    alert("Estos son tus datos de Usuario");
-    alert("Tus datos son" + " " + "Nombre de usuario:" + " " + nombreIngresado + " " + "Password:" + " " + passwordIngresado);
-}
-
-function pedirUsuario(){
-    do{
-        if (primerIngreso)
-        {
-            nombreIngresado = prompt("Ingrese ID");
-            primerIngreso = false;
-        }
-        else
-        {
-            alert("El ID debe contener el carácter '@'. Por favor, ingréselo nuevamente.");
-            nombreIngresado = prompt("Ingrese ID");
-        }
-    }
-    while(!nombreIngresado.includes("@"));
-}
-
-function password() {
-    console.log("¡Bienvenidxs al Simulador de gastos mensuales!");
-    passwordIngresado = prompt("Ingrese Password")
-    console.log("Te registraste correctamente");
-}
-
 function saludar() {
     console.log("¡Bienvenidxs al Simulador de gastos mensuales!");
 }
@@ -57,6 +30,10 @@ function agregar(titulo, descripcion, monto){
     }
 }
 
+function guardarGastosEnLocalStorage() {
+    localStorage.setItem("gastos", JSON.stringify(ListaGastos));
+}
+
 function limpiar(){
     document.getElementById("titulo").value = "";
     document.getElementById("descripcion").value = "";
@@ -64,19 +41,21 @@ function limpiar(){
 }
 
 function finalizar(){
-    if (ListaGastos.length > 0){
-    document.getElementById("botones").style.display = "none";
-    document.getElementById("resultados").style.display = "";
-
-    sumar();
-    encontrarMayorGasto();
-    document.getElementById("gastosTotales").textContent = total;
-    document.getElementById("mayorGasto").textContent = "El mayor gasto es " + mayorGasto.titulo + "- " + mayorGasto.descripcion + ", el monto es de: " + mayorGasto.monto;
+    const gastosGuardados = JSON.parse(localStorage.getItem("gastos"));
+    
+        if (ListaGastos.length > 0){
+        document.getElementById("botones").style.display = "none";
+        document.getElementById("resultados").style.display = "";
+    
+        sumar();
+        encontrarMayorGasto();
+        document.getElementById("gastosTotales").textContent = total;
+        document.getElementById("mayorGasto").textContent = "El mayor gasto es " + mayorGasto.titulo + "- " + mayorGasto.descripcion + ", el monto es de: " + mayorGasto.monto;
+        }
+        else {
+            alert("Ningun gasto fue ingresado");
+        }
     }
-    else {
-        alert("Ningun gasto fue ingresado");
-    }
-}
 
 function sumar(){
     ListaGastos.forEach((gasto) => total += gasto.monto);
