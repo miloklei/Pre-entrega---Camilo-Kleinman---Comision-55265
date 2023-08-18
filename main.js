@@ -9,13 +9,15 @@ class Gasto{
 let primerIngreso= true;
 let nombreIngresado;
 let passwordIngresado;
-let ListaGastos = [];
+let ListaGastos;
 let total = 0;
 let mayorGasto = new Gasto();
 
-
-function saludar() {
-    console.log("¡Bienvenidxs al Simulador de gastos mensuales!");
+function recuperarLista(){
+    ListaGastos = JSON.parse(localStorage.getItem("Gastos"));
+    if ( ListaGastos == null){
+        ListaGastos = [];
+    }
 }
 
 function agregar(titulo, descripcion, monto){
@@ -23,15 +25,35 @@ function agregar(titulo, descripcion, monto){
     let nuevoGasto = new Gasto(titulo, descripcion, monto);
     ListaGastos.push(nuevoGasto);
     limpiar();
-    alert("Gasto ingresado.");
+    Swal.fire({
+        title: 'Gasto Ingresado',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
     }
     else{
-        alert("Dato invalido")
+        Swal.fire({
+            title: 'Dato Invalido',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }
+          })
     }
 }
 
-function guardarGastosEnLocalStorage() {
-    localStorage.setItem("gastos", JSON.stringify(ListaGastos));
+function mostrarl(){
+    console.log(ListaGastos);
+}
+
+function guardarListaEnLocalStorage(nombre, lista) {
+    localStorage.setItem(nombre, JSON.stringify(lista));
 }
 
 function limpiar(){
@@ -41,6 +63,7 @@ function limpiar(){
 }
 
 function finalizar(){
+    guardarListaEnLocalStorage("Gastos", ListaGastos);
     const gastosGuardados = JSON.parse(localStorage.getItem("gastos"));
     
         if (ListaGastos.length > 0){
@@ -73,13 +96,8 @@ function encontrarMayorGasto(){
 
 document.getElementById("resultados").style.display = "none";
 
-
-saludar()
-pedirUsuario();
-password()
-info();
-
-
+recuperarLista();
+mostrarl();
 
 
 
