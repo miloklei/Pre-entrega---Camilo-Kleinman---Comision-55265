@@ -12,6 +12,12 @@ let passwordIngresado;
 let ListaGastos;
 let total = 0;
 let mayorGasto = new Gasto();
+let dolarblue;
+
+function eventos(){
+    document.getElementById("agregar").addEventListener("click", agregar);
+    document.getElementById("finalizar").addEventListener("click", finalizar);
+}
 
 function recuperarLista(){
     ListaGastos = JSON.parse(localStorage.getItem("Gastos"));
@@ -20,8 +26,11 @@ function recuperarLista(){
     }
 }
 
-function agregar(titulo, descripcion, monto){
-    if(titulo != "" || descripcion != "" || monto != "" ){
+function agregar(){
+    let titulo = document.getElementById("titulo").value;
+    let descripcion = document.getElementById("descripcion").value;
+    let monto = document.getElementById("monto").value;
+    if(titulo != "" || descripcion != "" || monto != ""){
     let nuevoGasto = new Gasto(titulo, descripcion, monto);
     ListaGastos.push(nuevoGasto);
     limpiar();
@@ -48,10 +57,6 @@ function agregar(titulo, descripcion, monto){
     }
 }
 
-function mostrarl(){
-    console.log(ListaGastos);
-}
-
 function guardarListaEnLocalStorage(nombre, lista) {
     localStorage.setItem(nombre, JSON.stringify(lista));
 }
@@ -59,7 +64,36 @@ function guardarListaEnLocalStorage(nombre, lista) {
 function limpiar(){
     document.getElementById("titulo").value = "";
     document.getElementById("descripcion").value = "";
-    document.getElementById("monto").value = parseInt(0);
+    document.getElementById("monto").value = "";
+}
+
+function listar(){
+    ListaGastos.forEach ((g) =>{
+        document.getElementById("listita").innerHTML += '<tr><td>' + g.titulo + '</td><td>' + g.descripcion + '</td><td>' + g.monto + '</td></tr>';
+    })
+}
+
+function llamarApiDolar(){
+    fetch('https://api.bluelytics.com.ar/v2/latest',{
+    method: "GET",
+    headers: {'Content-type': 'application/json;charset=UTF-8',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Request-Method': 'GET'}})
+    .then(response => response.json())
+    .catch(err => console.log('Solicitud Fallida', err));
+}
+
+async function getDolar(data = {}){
+    const response = await fetch('https://api.bluelytics.com.ar/v2/latest',{
+        mehtod: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers:{
+            "Content-Type": "application/json"}   
+    });
+    
+    dolarblue = response.json();
 }
 
 function finalizar(){
@@ -78,6 +112,7 @@ function finalizar(){
         else {
             alert("Ningun gasto fue ingresado");
         }
+        listar();
     }
 
 function sumar(){
@@ -96,8 +131,9 @@ function encontrarMayorGasto(){
 
 document.getElementById("resultados").style.display = "none";
 
+eventos();
 recuperarLista();
-mostrarl();
+getDolar();
 
 
 

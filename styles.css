@@ -55,3 +55,13 @@ button:hover {
 h1{
     margin-left: 10px;
 }
+
+table , th , td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th , td {
+    padding: 15px;
+    text-align: left;
+}

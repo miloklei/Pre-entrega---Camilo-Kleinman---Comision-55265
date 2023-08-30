@@ -18,8 +18,8 @@
         <input type="text" id="descripcion">
         <label for="monto">Monto:</label>
         <input type="number" id="monto">
-        <button onclick="agregar(titulo.value, descripcion.value, monto.value)">Agregar</button>
-        <button onclick="finalizar()">Finalizar</button>
+        <button id="agregar">Agregar</button>
+        <button id= "finalizar">Finalizar</button>
         <p id="result"></p>
     </div>
 
@@ -30,6 +30,17 @@
         <div>
             <h3>Mayor Gasto</h3>
             <label for="" id="mayorGasto"></label>
+        </div>
+
+        <div>
+        <h3>Lista de gastos</h3>
+        <table id="listita">
+            <tr>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Monto</th>
+            </tr>
+        </table>
         </div>
     </div>
 
