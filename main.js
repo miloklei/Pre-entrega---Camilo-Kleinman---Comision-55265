@@ -17,6 +17,18 @@ let dolarblue;
 function eventos(){
     document.getElementById("agregar").addEventListener("click", agregar);
     document.getElementById("finalizar").addEventListener("click", finalizar);
+    document.getElementById("volver").addEventListener("click", volver);
+    document.getElementById("reinicio").addEventListener("click", reiniciar);
+}
+
+function volver(){
+    location.reload();
+}
+
+function reiniciar(){
+    ListaGastos = [];
+    localStorage.clear();
+    volver();
 }
 
 function recuperarLista(){
@@ -69,18 +81,9 @@ function limpiar(){
 
 function listar(){
     ListaGastos.forEach ((g) =>{
-        document.getElementById("listita").innerHTML += '<tr><td>' + g.titulo + '</td><td>' + g.descripcion + '</td><td>' + g.monto + '</td></tr>';
+        let valorDolar = (Math.round((g.monto/dolarblue.blue.value_avg) * 100) / 100).toFixed(2);
+        document.getElementById("listita").innerHTML += '<tr><td>' + g.titulo + '</td><td>' + g.descripcion + '</td><td>' + g.monto + '</td><td>' + valorDolar + '</td></tr>';
     })
-}
-
-function llamarApiDolar(){
-    fetch('https://api.bluelytics.com.ar/v2/latest',{
-    method: "GET",
-    headers: {'Content-type': 'application/json;charset=UTF-8',
-    'Access-Control-Allow-Headers': '*',
-    'Access-Control-Request-Method': 'GET'}})
-    .then(response => response.json())
-    .catch(err => console.log('Solicitud Fallida', err));
 }
 
 async function getDolar(data = {}){
@@ -91,9 +94,11 @@ async function getDolar(data = {}){
         credentials: 'same-origin',
         headers:{
             "Content-Type": "application/json"}   
-    });
-    
-    dolarblue = response.json();
+    }).then(response => response.json()
+    .then((value) => 
+    {
+        dolarblue = value;
+    }));
 }
 
 function finalizar(){
